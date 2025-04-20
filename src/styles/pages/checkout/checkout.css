@@ -119,6 +119,18 @@
   margin-left: 3px;
 }
 
+.product-update {
+  margin-top: 5px;
+}
+
+.product-upate-icons-left {
+  margin-right: 5px;
+}
+
+.product-upate-icons-right {
+  margin-left: 5px;
+}
+
 @media (max-width: 1000px) {
   .delivery-options {
     /* grid-column: 1 means this element will be placed
