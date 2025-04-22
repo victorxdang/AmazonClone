@@ -25,3 +25,16 @@ export async function getAllOrders()
     
     return allOrders;
 }
+
+export async function getOrder(id)
+{
+    let order = null;
+
+    await fetch(url + id)
+    .then((response) => (response.status === 200) ? response.json() : null)
+    .then((data) => {
+        order = data;
+    });
+    
+    return order;
+}

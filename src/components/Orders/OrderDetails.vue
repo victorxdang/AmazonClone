@@ -1,7 +1,7 @@
 <script setup>
 import dayjs from 'dayjs';
-import OrderProduct from './OrderProduct.vue';
-import { formatCurrencyAsString } from '../../../composables/utilities';
+import OrderProduct from '/src/components/Orders/OrderProduct.vue';
+import { formatCurrencyAsString } from '/composables/utilities';
 
 defineProps({
     order: Object
@@ -35,5 +35,5 @@ defineProps({
 </template>
 
 <style scoped>
-@import "../../styles/pages/orders.css";
+@import "/src/styles/pages/orders.css";
 </style>

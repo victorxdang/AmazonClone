@@ -1,10 +1,10 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue';
 
-import { formatCurrencyAsString } from '../../../composables/utilities';
-import { getDeliveryOption } from '../../../composables/delivery';
+import { formatCurrencyAsString } from '/composables/utilities';
+import { getDeliveryOption } from '/composables/delivery';
 
-const taxes = ref(0.1);
+const taxes = ref(0.0825);
 const props = defineProps({
     allProductAndCartInfo: Object
 });
@@ -95,6 +95,6 @@ onMounted(() => {
 </template>
 
 <style scoped>
-@import "../../styles/pages/checkout/checkout-header.css";
-@import "../../styles/pages/checkout/checkout.css";
+@import "/src/styles/pages/checkout/checkout-header.css";
+@import "/src/styles/pages/checkout/checkout.css";
 </style>

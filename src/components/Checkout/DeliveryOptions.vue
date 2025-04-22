@@ -1,6 +1,6 @@
 <script setup>
-import { formatCurrencyAsString } from '../../../composables/utilities';
-import { formatDeliveryDate } from '../../../composables/delivery';
+import { formatCurrencyAsString } from '/composables/utilities';
+import { formatDeliveryDate } from '/composables/delivery';
 
 const events = defineEmits([ "onShippingSelected" ])
 
@@ -32,6 +32,6 @@ function onClick()
 </template>
 
 <style scoped>
-@import "../../styles/pages/checkout/checkout-header.css";
-@import "../../styles/pages/checkout/checkout.css";
+@import "/src/styles/pages/checkout/checkout-header.css";
+@import "/src/styles/pages/checkout/checkout.css";
 </style>

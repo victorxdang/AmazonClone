@@ -2,10 +2,10 @@
 import { ref, onMounted } from 'vue';
 import { useToast } from 'vue-toastification';
 
-import Header from '../components/Common/Header.vue';
-import Product from '../components/Home/Product.vue';
+import Header from '/src/components/Common/Header.vue';
+import Product from '/src/components/Home/Product.vue';
 import { getCartQuantity, updateCartQuantity, setItemInCart, doesItemExistInCart } from '../../composables/cart';
-import { getAllProducts } from '../../composables/products';
+import { getAllProducts } from '/composables/products';
 
 const toast = useToast();
 const products = ref();
@@ -64,6 +64,6 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-@import "../styles/shared/amazon-header.css";
-@import "../styles/pages/amazon.css";
+@import "/src/styles/shared/amazon-header.css";
+@import "/src/styles/pages/amazon.css";
 </style>

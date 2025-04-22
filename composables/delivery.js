@@ -34,7 +34,7 @@ export function formatDeliveryDate(deliveryID)
     return dayjs().add(getDeliveryOption(deliveryID).deliveryDays, "days").format("dddd, MMMM D")
 }
 
-export function formatDeliveryDateFromOrderDate(deliveryID, orderDate)
+export function formatDeliveryDateFromOrderDate(deliveryID, orderDate, format)
 {
-    return dayjs(orderDate).add(getDeliveryOption(deliveryID).deliveryDays, "days").format("MMMM D")
+    return dayjs(orderDate).add(getDeliveryOption(deliveryID).deliveryDays, "days").format(format)
 }

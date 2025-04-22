@@ -5,12 +5,12 @@ import { ref, onMounted } from 'vue';
 import { RouterLink, useRouter } from 'vue-router';
 import { useToast } from 'vue-toastification';
 
-import { getCartQuantity, getAllItemsFromCart, clearAllItemsFromCart } from '../../composables/cart';
-import { placeOrder } from '../../composables/orders';
-import { getUUIDv4 } from '../../composables/utilities';
+import { getCartQuantity, getAllItemsFromCart, clearAllItemsFromCart } from '/composables/cart';
+import { placeOrder } from '/composables/orders';
+import { getUUIDv4 } from '/composables/utilities';
 
-import OrderSummary from '../components/Checkout/OrderSummary.vue';
-import PaymentSummary from '../components/Checkout/PaymentSummary.vue';
+import OrderSummary from '/src/components/Checkout/OrderSummary.vue';
+import PaymentSummary from '/src/components/Checkout/PaymentSummary.vue';
 
 const toast = useToast();
 const router = useRouter();
@@ -63,8 +63,8 @@ onMounted(async () => {
         <div class="header-content">
             <div class="checkout-header-left-section">
             <RouterLink to="/">
-                <img class="amazon-logo" src="../assets/images/amazon-logo.png">
-                <img class="amazon-mobile-logo" src="../assets/images/amazon-mobile-logo.png">
+                <img class="amazon-logo" src="/src/assets/images/amazon-logo.png">
+                <img class="amazon-mobile-logo" src="/src/assets/images/amazon-mobile-logo.png">
             </RouterLink>
             </div>
 
@@ -75,7 +75,7 @@ onMounted(async () => {
             </div>
 
             <div class="checkout-header-right-section">
-            <img src="../assets/images/icons/checkout-lock-icon.png">
+            <img src="/src/assets/images/icons/checkout-lock-icon.png">
             </div>
         </div>
     </div>
@@ -83,9 +83,9 @@ onMounted(async () => {
     <div class="main">
         <div class="page-title">Review your order</div>
 
-        <div v-if="allProductInfo?.length > 0 || false" class="checkout-grid">
+        <div class="checkout-grid">
             <div class="order-summary">
-                <OrderSummary v-for="(ci, index) in allProductInfo" :key="ci.productInfo.id" :productAndCartInfo="ci" :index="index" @deleteItem="onDeleteItemFromCart" @updateItem="onUpdateItemFromCart" />
+                <OrderSummary v-if="allProductInfo?.length > 0" v-for="(ci, index) in allProductInfo" :key="ci.productInfo.id" :productAndCartInfo="ci" :index="index" @deleteItem="onDeleteItemFromCart" @updateItem="onUpdateItemFromCart" />
             </div>
 
             <div class="payment-summary">
@@ -96,6 +96,6 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-@import "../styles/pages/checkout/checkout-header.css";
-@import "../styles/pages/checkout/checkout.css";
+@import "/src/styles/pages/checkout/checkout-header.css";
+@import "/src/styles/pages/checkout/checkout.css";
 </style>

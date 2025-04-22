@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { formatCurrencyAsString } from '../../../composables/utilities';
+import { formatCurrencyAsString } from '/composables/utilities';
 
 const events = defineEmits([ "addToCart" ]);
 
@@ -17,16 +17,9 @@ function addToCart()
     events("addToCart", props.productInfo.id, props.productInfo.name, quantity.value);
 }
 
-onMounted(() => {
-    import(`../../assets/${props.productInfo.image}`)
-    .then((img) => {
-        productImage.value = img.default;
-    });
-
-    import(`../../assets/images/ratings/rating-${String(props.productInfo.rating.stars * 10).padStart(2, '0')}.png`)
-    .then((img) => {
-        ratingImage.value = img.default;
-    });
+onMounted(async () => {
+    productImage.value = `/src/assets/${props.productInfo.image}`;
+    ratingImage.value = `/src/assets/images/ratings/rating-${String(props.productInfo.rating.stars * 10).padStart(2, '0')}.png`
 });
 </script>
 
@@ -60,7 +53,7 @@ onMounted(() => {
         <div class="product-spacer"></div>
 
         <div class="added-to-cart">
-            <img src="../../assets/images/icons/checkmark.png">
+            <img src="/src/assets/images/icons/checkmark.png">
             Added
         </div>
 
@@ -71,6 +64,6 @@ onMounted(() => {
 </template>
 
 <style scoped>
-@import "../../styles/shared/amazon-header.css";
-@import "../../styles/pages/amazon.css";
+@import "/src/styles/shared/amazon-header.css";
+@import "/src/styles/pages/amazon.css";
 </style>

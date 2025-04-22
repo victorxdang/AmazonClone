@@ -1,9 +1,9 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { formatCurrencyAsString } from '../../../composables/utilities';
-import { formatDeliveryDate, getDeliveryOptionLength, getDeliveryOption } from '../../../composables/delivery';
+import { formatCurrencyAsString } from '/composables/utilities';
+import { formatDeliveryDate, getDeliveryOptionLength, getDeliveryOption } from '/composables/delivery';
 import DeliveryOptions from './DeliveryOptions.vue'
-import { removeItemFromCart, updateCartQuantity, updateCartShipping } from '../../../composables/cart';
+import { removeItemFromCart, updateCartQuantity, updateCartShipping } from '/composables/cart';
 
 const events = defineEmits([ "updateItem", "deleteItem" ])
 
@@ -47,11 +47,8 @@ function changeShipping(deliveryID)
 }
 
 onMounted(() => {
-    import(`../../assets/${product.value.image}`)
-    .then((img) => {
-        image.value = img.default;
-    });
-})
+    image.value = `/src/assets/${product.value.image}`;
+});
 </script>
 
 <template>
@@ -95,6 +92,6 @@ onMounted(() => {
 </template>
 
 <style scoped>
-@import "../../styles/pages/checkout/checkout-header.css";
-@import "../../styles/pages/checkout/checkout.css";
+@import "/src/styles/pages/checkout/checkout-header.css";
+@import "/src/styles/pages/checkout/checkout.css";
 </style>

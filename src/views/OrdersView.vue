@@ -1,11 +1,11 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
-import Header from '../components/Common/Header.vue';
-import OrderDetails from '../components/Orders/OrderDetails.vue';
+import Header from '/src/components/Common/Header.vue';
+import OrderDetails from '/src/components/Orders/OrderDetails.vue';
 
-import { getCartQuantity } from '../../composables/cart';
-import { getAllOrders } from '../../composables/orders';
+import { getCartQuantity } from '/composables/cart';
+import { getAllOrders } from '/composables/orders';
 
 const allOrders = ref([ ]);
 
@@ -29,5 +29,5 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-@import "../styles/pages/orders.css";
+@import "/src/styles/pages/orders.css";
 </style>
