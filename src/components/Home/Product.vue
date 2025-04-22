@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { formatCurrencyAsString } from '../../../composables/utilities';
 
 const events = defineEmits([ "addToCart" ]);
@@ -9,24 +9,25 @@ const props = defineProps({
 });
 
 const quantity = ref(1);
-
 const productImage = ref();
-import(`../../assets/${props.productInfo.image}`)
-    .then((img) => {
-        productImage.value = img.default;
-    });
-
 const ratingImage = ref();
-import(`../../assets/images/ratings/rating-${String(props.productInfo.rating.stars * 10).padStart(2, '0')}.png`)
-    .then((img) => {
-        ratingImage.value = img.default;
-    });
-
 
 function addToCart()
 {
     events("addToCart", props.productInfo.id, props.productInfo.name, quantity.value);
 }
+
+onMounted(() => {
+    import(`../../assets/${props.productInfo.image}`)
+    .then((img) => {
+        productImage.value = img.default;
+    });
+
+    import(`../../assets/images/ratings/rating-${String(props.productInfo.rating.stars * 10).padStart(2, '0')}.png`)
+    .then((img) => {
+        ratingImage.value = img.default;
+    });
+});
 </script>
 
 <template>

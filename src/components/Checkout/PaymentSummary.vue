@@ -1,12 +1,10 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue';
-import { useToast } from 'vue-toastification';
+
 import { formatCurrencyAsString } from '../../../composables/utilities';
 import { getDeliveryOption } from '../../../composables/delivery';
 
 const taxes = ref(0.1);
-
-const toast = useToast();
 const props = defineProps({
     allProductAndCartInfo: Object
 });
@@ -28,9 +26,8 @@ const stopWatch = watch(props.allProductAndCartInfo, (newProps, oldProps) => {
 
 function onPlaceOrderClicked()
 {
-    toast.success("Your order has been placed!");
     stopWatch();
-    events("orderPlaced");
+    events("orderPlaced", payment.value.total);
 }
 
 function updatePaymentSummary()

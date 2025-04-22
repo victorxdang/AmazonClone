@@ -1,20 +1,45 @@
 <script setup>
-import { ref, onMounted } from 'vue';
-import { RouterLink } from 'vue-router';
+import dayjs from "dayjs";
 
-import { getCartQuantity, getAllItemsFromCart } from '../../composables/cart';
+import { ref, onMounted } from 'vue';
+import { RouterLink, useRouter } from 'vue-router';
+import { useToast } from 'vue-toastification';
+
+import { getCartQuantity, getAllItemsFromCart, clearAllItemsFromCart } from '../../composables/cart';
+import { placeOrder } from '../../composables/orders';
+import { getUUIDv4 } from '../../composables/utilities';
+
 import OrderSummary from '../components/Checkout/OrderSummary.vue';
 import PaymentSummary from '../components/Checkout/PaymentSummary.vue';
 
+const toast = useToast();
+const router = useRouter();
+
 const quantity = ref(getCartQuantity());
 const allProductInfo = ref([ ]);
-const hasItems = ref(false);
-const displayPaymentSummary = ref(false);
 
-function onPlaceOrderClicked()
-{
+function onPlaceOrderClicked(orderTotal)
+{   
+    const allCartInfo = [ ];
+    allProductInfo.value.forEach((item) => {
+        allCartInfo.push(item.cartInfo);
+    });
+
+    const orderDetails = JSON.stringify({
+        "id": getUUIDv4(),
+        "orderDate": dayjs(),
+        "total": orderTotal,
+        "cartInfo": allCartInfo
+    });
+
+    placeOrder(orderDetails);
+    toast.success("Your order has been placed!");
+
     allProductInfo.value = [ ];
     quantity.value = 0;
+
+    clearAllItemsFromCart();
+    router.push("/orders");
 }
 
 function onUpdateItemFromCart(index)
@@ -30,12 +55,6 @@ function onDeleteItemFromCart(index)
 
 onMounted(async () => {
     allProductInfo.value = getAllItemsFromCart();
-
-    if (allProductInfo.value !== null)
-    {
-        hasItems.value = allProductInfo.value.length > 0;
-        displayPaymentSummary.value = true;
-    }
 });
 </script>
 
@@ -64,15 +83,13 @@ onMounted(async () => {
     <div class="main">
         <div class="page-title">Review your order</div>
 
-        <div class="checkout-grid">
+        <div v-if="allProductInfo?.length > 0 || false" class="checkout-grid">
             <div class="order-summary">
-                <div v-if="hasItems">
-                    <OrderSummary v-for="(ci, index) in allProductInfo" :key="ci.productInfo.id" :productAndCartInfo="ci" :index="index" @deleteItem="onDeleteItemFromCart" @updateItem="onUpdateItemFromCart" />
-                </div>
+                <OrderSummary v-for="(ci, index) in allProductInfo" :key="ci.productInfo.id" :productAndCartInfo="ci" :index="index" @deleteItem="onDeleteItemFromCart" @updateItem="onUpdateItemFromCart" />
             </div>
 
             <div class="payment-summary">
-                <PaymentSummary v-if="displayPaymentSummary" :allProductAndCartInfo="allProductInfo" @orderPlaced="onPlaceOrderClicked"/>
+                <PaymentSummary :allProductAndCartInfo="allProductInfo" @orderPlaced="onPlaceOrderClicked"/>
             </div>
         </div>
     </div>

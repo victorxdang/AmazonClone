@@ -1,10 +1,11 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { RouterLink } from 'vue-router';
 import { useToast } from 'vue-toastification';
 
+import Header from '../components/Common/Header.vue';
 import Product from '../components/Home/Product.vue';
 import { getCartQuantity, updateCartQuantity, setItemInCart, doesItemExistInCart } from '../../composables/cart';
+import { getAllProducts } from '../../composables/products';
 
 const toast = useToast();
 const products = ref();
@@ -48,53 +49,13 @@ function getProductWithID(id)
 onMounted(async () => {
     // get data from localStorage to calculate the total items in the cart
     cartQuantity.value = getCartQuantity();
-    
-    // grab all of the items from the "database"
-    await fetch("http://localhost:3000/products/")
-    .then((response) => {
-        if (response.status === 200)
-            return response.json();
-
-        return null;
-    })
-    .then((data) => {
-        if (data !== null)
-            products.value = data;
-    });
+    products.value = await getAllProducts();
 });
 </script>
 
 <template>
-    <div class="amazon-header">
-        <div class="amazon-header-left-section">
-            <RouterLink to="/" class="header-link">
-                <img class="amazon-logo" src="../assets/images/amazon-logo-white.png">
-                <img class="amazon-mobile-logo" src="../assets/images/amazon-mobile-logo-white.png">
-            </RouterLink>
-        </div>
+    <Header :cartQuantity="cartQuantity" />
 
-        <div class="amazon-header-middle-section">
-            <input class="search-bar" type="text" placeholder="Search">
-
-            <button class="search-button">
-                <img class="search-icon" src="../assets/images/icons/search-icon.png">
-            </button>
-        </div>
-
-        <div class="amazon-header-right-section">
-            <RouterLink class="orders-link header-link" to="/orders">
-                <span class="returns-text">Returns</span>
-                <span class="orders-text">& Orders</span>
-            </RouterLink>
-
-            <RouterLink class="cart-link header-link" to="/checkout">
-                <img class="cart-icon" src="../assets/images/icons/cart-icon.png">
-                <div class="cart-quantity">{{ cartQuantity }}</div>
-                <div class="cart-text">Cart</div>
-            </RouterLink>
-        </div>
-    </div>
-    
     <div class="main">
         <div class="products-grid">
             <Product v-for="p in products" :productInfo="p" @addToCart="onAddCartClicked" />

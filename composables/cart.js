@@ -56,3 +56,8 @@ export function removeItemFromCart(id)
 {
     localStorage.removeItem(id);
 }
+
+export function clearAllItemsFromCart()
+{
+    localStorage.clear();
+}
